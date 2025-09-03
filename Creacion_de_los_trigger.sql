@@ -1,9 +1,9 @@
 
 --- Trigger
 
----auditar_venta
+--- auditar_venta
 
-```sql
+
 CREATE TRIGGER auditar_venta
 AFTER INSERT ON ventas
 FOR EACH ROW
@@ -32,10 +32,9 @@ END;
 //
 
 DELIMITER ;
-```
+
 --- Trigger auditar_cuota_generada
 
-```sql
 DELIMITER //
 
 CREATE TRIGGER auditar_cuota_generada
@@ -47,4 +46,5 @@ BEGIN
 END //
 
 DELIMITER ;
-```
+
+---
