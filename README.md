@@ -623,9 +623,9 @@ Este trigger es especialmente útil en sistemas que gestionan pagos escalonados,
 
 ---
 
-## Síntesis del sistema `cuchuflito_sa`
+## Síntesis de la Base de Datos `cuchuflito_sa`
 
-Esta sección resume la arquitectura relacional, funcional y pedagógica del sistema desarrollado, integrando sus componentes en una visión unificada.
+Esta sección resume la arquitectura relacional, funcional y pedagógica del sistema desarrollado para la base, integrando sus componentes en una visión unificada.
 
 ### Componentes estructurales
 
@@ -654,18 +654,19 @@ El sistema refleja una lógica relacional donde cada entidad se conecta con otra
 
 - **Trazabilidad completa** de operaciones
 - **Escalabilidad técnica** para futuras integraciones
-- **Claridad pedagógica** para enseñanza de SQL avanzado
 - **Adaptabilidad funcional** a distintos escenarios de negocio
 
 ---
 
-### Valor educativo
+### Valor educativo (honestamente chamuyo)
 
-Este sistema no solo organiza datos: **enseña a pensar en relaciones, procesos y decisiones**. Cada componente fue diseñado con intención didáctica, permitiendo:
+Este sistema no solo organiza datos: **enseña a pensar en relaciones, procesos y decisiones**. Cada componente fue diseñado con intención del crecimiento y aprendizaje personal, permitiendo:
 
 - Comprender el ciclo completo de una operación comercial
 - Aplicar funciones de fecha, iteración y validación
 - Estudiar el impacto de cada decisión técnica en la experiencia del usuario
+
+Este módulo fue construido desde la experiencia de aprender haciendo, documentando y compartiendo, sin ánimos de atribuirle más valor pedagógico que el de una mera reflexión sobre este proceso de aprendizaje.
 
 ---
 
