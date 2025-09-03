@@ -38,71 +38,219 @@ La base de datos **cuchuflito_sa** es un esquema que almacena datos de una firma
 
 ## Tablas que componen la base de datos de `Cuchuflito_SA`
 
-### Tabla `Clientes`
+### Tabla `clientes`
 
-- **Clave primaria:** `ID_Cliente`  
-- **Claves foráneas:** No posee  
-- Identificador único para cada cliente, eventual o habitual.
+**Descripción**  
+Registra los datos personales y de contacto de cada cliente, ya sea habitual o eventual.
 
-### Tabla `Proveedores`
+**Objetivo**  
+Permitir la identificación única de cada cliente, facilitando:
+- La trazabilidad de operaciones comerciales
+- La personalización de servicios
+- La segmentación de usuarios
 
-- **Clave primaria:** `ID_Proveedor`  
-- **Claves foráneas:** No posee  
-- Identificador único para cada proveedor registrado.
+**Relaciones**  
+- Se vincula con `ventas` mediante `ID_Cliente`
+- Participa en vistas como `vista_ventas_detalladas`
 
-### Tabla `Medios_de_Pago`
+---
 
-- **Clave primaria:** `ID_Medio`  
-- **Claves foráneas:** No posee  
-- Identificador único para cada medio de pago utilizado.
+### Tabla `proveedores`
 
-### Tabla `Productos`
+**Descripción**  
+Almacena la información de cada proveedor registrado en el sistema.
 
-- **Clave primaria:** `ID_Producto`  
-- **Claves foráneas:** No posee  
-- Identificador único para cada producto comercializado.
+**Objetivo**  
+Facilitar el control de abastecimiento, permitiendo:
+- Identificar el origen de cada producto
+- Auditar compras por proveedor
+- Evaluar relaciones comerciales
 
-### Tabla `Compras`
+**Relaciones**  
+- Se vincula con `compras` mediante `ID_Proveedor`
+- Participa en vistas como `vista_inventario_por_proveedor`
 
-- **Clave primaria:** `ID_Compra`  
-- **Claves foráneas:** `ID_Proveedor`, `Comprador`  
-- Relaciona la compra con el proveedor y el empleado que la realiza.
+---
 
-### Tabla `Ventas`
+### Tabla `medios_de_pago`
 
-- **Clave primaria:** `ID_Venta`  
-- **Claves foráneas:** `ID_Cliente`, `Medio_de_Pago`, `Vendedor`  
-- Relaciona la venta con el cliente, el medio de pago y el empleado que la ejecuta.
+**Descripción**  
+Define los métodos de pago disponibles, incluyendo si permiten cuotas.
+
+**Objetivo**  
+Formalizar las condiciones de pago, permitiendo:
+- Registrar transacciones con distintos medios
+- Controlar pagos fraccionados
+- Enseñar lógica condicional en SQL
+
+**Relaciones**  
+- Se vincula con `ventas` y `cuotas_pago`
+- Participa en procedimientos como `registrar_venta_con_cuotas`
+
+---
+
+### Tabla `productos`
+
+**Descripción**  
+Contiene el catálogo de productos comercializados, con descripción, precio y stock.
+
+**Objetivo**  
+Centralizar la información de productos, permitiendo:
+- Controlar inventario
+- Asociar productos a compras y ventas
+- Enseñar modelado de entidades con atributos múltiples
+
+**Relaciones**  
+- Se vincula con `compras_productos` y `ventas_productos`
+- Participa en vistas como `vista_control_inventario`
+
+---
+
+### Tabla `compras`
+
+**Descripción**  
+Registra cada operación de compra realizada a un proveedor.
+
+**Objetivo**  
+Documentar el abastecimiento, permitiendo:
+- Auditar compras por fecha, proveedor y empleado
+- Calcular totales económicos
+- Enseñar inserciones encadenadas
+
+**Relaciones**  
+- Se vincula con `proveedores` y `empleados`
+- Participa en procedimientos como `registrar_compra`
+
+---
+
+### Tabla `ventas`
+
+**Descripción**  
+Registra cada operación de venta realizada a un cliente.
+
+**Objetivo**  
+Formalizar el acto comercial, permitiendo:
+- Documentar cliente, vendedor, medio de pago y total
+- Enseñar trazabilidad relacional
+- Integrar lógica de cuotas
+
+**Relaciones**  
+- Se vincula con `clientes`, `medios_de_pago`, `empleados`
+- Participa en procedimientos como `registrar_venta_con_cuotas`
+
+---
 
 ### Tabla `compras_productos`
 
-- **Clave primaria:** No posee  
-- **Claves foráneas:** `ID_Compra`, `ID_Producto`  
-- Relaciona productos con compras específicas.
+**Descripción**  
+Relaciona productos con compras específicas, detallando cantidad y precio unitario.
+
+**Objetivo**  
+Descomponer cada compra en sus componentes, permitiendo:
+- Calcular totales por producto
+- Enseñar relaciones N:M
+- Auditar el flujo de entrada de stock
+
+**Relaciones**  
+- Se vincula con `compras` y `productos`
+- Participa en vistas como `vista_compras_detalladas`
+
+---
 
 ### Tabla `ventas_productos`
 
-- **Clave primaria:** No posee  
-- **Claves foráneas:** `ID_Venta`, `ID_Producto`  
-- Relaciona productos con ventas específicas.
+**Descripción**  
+Relaciona productos con ventas específicas, detallando cantidad y precio unitario.
 
-### Tabla `Cuota_de_Pago`
+**Objetivo**  
+Descomponer cada venta en sus componentes, permitiendo:
+- Calcular ingresos por producto
+- Enseñar relaciones N:M
+- Auditar el flujo de salida de stock
 
-- **Clave primaria:** `ID_Cuota`  
-- **Claves foráneas:** `ID_Medio`  
-- Registra el número de cuotas y el medio de pago aplicado.
+**Relaciones**  
+- Se vincula con `ventas` y `productos`
+- Participa en vistas como `vista_ventas_detalladas`
 
-### Tabla `Empleados`
+---
 
-- **Clave primaria:** `Legajo`  
-- **Clave foránea:** `ID_Rol`  
-- Identificador único del empleado y su rol dentro de la empresa.
+### Tabla `cuotas_pago`
 
-### Tabla `Roles`
+**Descripción**  
+Registra el esquema de cuotas pactadas en una venta, incluyendo cantidad y medio de pago.
 
-- **Clave primaria:** `ID_Rol`  
-- **Claves foráneas:** No posee  
-- Define el rol de cada empleado.
+**Objetivo**  
+Formalizar compromisos financieros fraccionados, permitiendo:
+- Controlar pagos mensuales
+- Enseñar lógica de fragmentación
+- Auditar compromisos económicos
+
+**Relaciones**  
+- Se vincula con `medios_de_pago`
+- Participa en procedimientos como `registrar_venta_con_cuotas`
+
+---
+
+### Tabla `roles`
+
+**Descripción**  
+Define los roles laborales dentro de la empresa.
+
+**Objetivo**  
+Establecer jerarquías y funciones, permitiendo:
+- Controlar permisos y responsabilidades
+- Enseñar modelado de estructuras organizativas
+
+**Relaciones**  
+- Se vincula con `empleados`
+
+---
+
+### Tabla `empleados`
+
+**Descripción**  
+Registra los datos de cada empleado, incluyendo su rol.
+
+**Objetivo**  
+Identificar al personal operativo, permitiendo:
+- Auditar compras y ventas por empleado
+- Enseñar relaciones jerárquicas
+
+**Relaciones**  
+- Se vincula con `roles`, `compras`, `ventas`
+- Participa en procedimientos como `ObtenerResumenVentasPorEmpleado`
+
+---
+
+### Tabla `auditoria_ventas`
+
+**Descripción**  
+Registra automáticamente cada venta realizada, con metadatos de auditoría.
+
+**Objetivo**  
+Preservar la trazabilidad histórica, permitiendo:
+- Auditar inserciones en `ventas`
+- Enseñar uso de triggers `AFTER INSERT`
+
+**Relaciones**  
+- Se vincula con `ventas` y `clientes`
+- Activada por el trigger `auditar_venta`
+
+---
+
+### Tabla `auditoria_cuotas`
+
+**Descripción**  
+Registra automáticamente cada cuota generada, con metadatos de auditoría.
+
+**Objetivo**  
+Preservar la trazabilidad de pagos fraccionados, permitiendo:
+- Auditar inserciones en `cuotas_pago`
+- Enseñar uso de triggers `AFTER INSERT`
+
+**Relaciones**  
+- Se vincula con `cuotas_pago`
+- Activada por el trigger `auditar_cuota_generada`
 
 ---
 
